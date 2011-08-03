@@ -1,7 +1,7 @@
 package dumbledore.metrics;
 
 /**
- * @author Alex Feinberg
+ *
  */
 public enum DataType {
     INTEGER,

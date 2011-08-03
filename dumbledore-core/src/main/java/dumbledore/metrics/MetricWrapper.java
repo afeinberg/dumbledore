@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * @author Alex Feinberg
+ *
  */
 public class MetricWrapper {
 

@@ -6,7 +6,6 @@ package dumbledore.metrics;
  * a <em>TIMESTAMP</em> DST.
  *
  * @see <a href="http://oss.oetiker.ch/rrdtool/tut/rrd-beginners.en.html">RRDtool rrd-beginners</a>
- * @author Alex Feinberg
  */
 public enum MetricType {
     /**

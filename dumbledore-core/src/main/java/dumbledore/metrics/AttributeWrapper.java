@@ -6,7 +6,7 @@ import dumbledore.annotations.Attribute;
 import java.lang.reflect.Method;
 
 /**
- * @author Alex Feinberg
+ *
  */
 public class AttributeWrapper {
 

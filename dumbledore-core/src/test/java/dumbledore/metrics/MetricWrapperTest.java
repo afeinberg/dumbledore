@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
 
 
 /**
- * @author Alex Feinberg
+ *
  */
 public class MetricWrapperTest {
 

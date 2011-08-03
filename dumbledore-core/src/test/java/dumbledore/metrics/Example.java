@@ -4,7 +4,7 @@ import dumbledore.annotations.Attribute;
 import dumbledore.annotations.Metric;
 
 /**
-* @author Alex Feinberg
+*
 */
 @Metric(description = "Example class")
 public class Example {

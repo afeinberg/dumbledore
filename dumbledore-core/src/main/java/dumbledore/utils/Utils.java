@@ -1,7 +1,7 @@
 package dumbledore.utils;
 
 /**
- * @author Alex Feinberg
+ *
  */
 public class Utils {
 
