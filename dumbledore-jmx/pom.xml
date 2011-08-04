@@ -13,5 +13,12 @@
     <version>0.1.0-SNAPSHOT</version>
   </parent>
 
+  <dependencies>
+    <dependency>
+      <groupId>dumbledore</groupId>
+      <artifactId>dumbledore-core</artifactId>
+      <version>0.1.0-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
 </project>
     
