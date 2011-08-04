@@ -55,6 +55,16 @@ public class MetricsRepository {
         }
     }
 
+    public void removeMetric(Object obj) {
+        Class<?> cls = obj.getClass();
+        removeMetric(Utils.getPackageName(cls), Utils.getClassName(cls));
+    }
+
+    public void removeMetric(String type, Object obj) {
+        Class<?> cls = obj.getClass();
+        removeMetric(Utils.getPackageName(cls), type);
+    }
+
     public void removeMetric(String domain, String type)  {
         synchronized(this) {
             if(!metrics.contains(type, domain))
