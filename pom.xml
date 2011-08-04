@@ -13,6 +13,7 @@
     <module>dumbledore-core</module>
     <module>dumbledore-jmx</module>
     <module>dumbledore-servlet</module>
+    <module>dumbledore-example</module>
   </modules>
 
 
