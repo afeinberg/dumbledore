@@ -1,10 +1,11 @@
 package dumbledore.jmx;
 
+import dumbledore.DumbledoreException;
 import dumbledore.annotations.Attribute;
 import dumbledore.annotations.Sensor;
-import dumbledore.annotations.Operation;
-import dumbledore.annotations.Param;
-import dumbledore.annotations.Setter;
+import dumbledore.annotations.jmx.Operation;
+import dumbledore.annotations.jmx.Param;
+import dumbledore.annotations.jmx.Setter;
 import org.apache.log4j.Logger;
 
 import javax.management.Descriptor;
@@ -67,11 +68,11 @@ public class JmxUtils {
 
             return mbean;
         } catch(MBeanException e) {
-            throw new RuntimeException(e);
+            throw new DumbledoreException(e);
         } catch(InvalidTargetObjectTypeException e) {
-            throw new RuntimeException(e);
+            throw new DumbledoreException(e);
         } catch(InstanceNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new DumbledoreException(e);
         }
     }
 
@@ -164,7 +165,7 @@ public class JmxUtils {
                 info.setDescriptor(descriptor);
                 infos.add(info);
             } catch(IntrospectionException e) {
-                throw new RuntimeException(e);
+                throw new DumbledoreException(e);
             }
         }
 
@@ -213,7 +214,7 @@ public class JmxUtils {
         try {
             return new ObjectName(domain + ":type=" + type);
         } catch(MalformedObjectNameException e) {
-            throw new RuntimeException(e);
+            throw new DumbledoreException(e);
         }
     }
 

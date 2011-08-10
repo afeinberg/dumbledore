@@ -1,4 +1,4 @@
-package dumbledore.annotations;
+package dumbledore.annotations.jmx;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,7 +7,9 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Operation {
+public @interface Setter {
+
+    public String name();
 
     public String description() default "";
 }

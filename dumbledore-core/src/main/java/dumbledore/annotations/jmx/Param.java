@@ -1,4 +1,4 @@
-package dumbledore.annotations;
+package dumbledore.annotations.jmx;
 
 public @interface Param {
 

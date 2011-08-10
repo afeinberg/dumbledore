@@ -8,7 +8,7 @@ import javax.management.ObjectName;
 /**
  *
  */
-public class JmxListener implements SensorListener {
+public class ReadWriteJmxListener implements SensorListener {
 
     public void registered(String domain, String type, SensorDescriptor sensor) {
         ObjectName name = JmxUtils.createObjectName(domain, type);

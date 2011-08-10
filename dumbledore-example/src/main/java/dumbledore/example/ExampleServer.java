@@ -1,14 +1,17 @@
 package dumbledore.example;
 
-import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import dumbledore.annotations.Attribute;
 import dumbledore.annotations.Sensor;
-import dumbledore.jmx.JmxListener;
+import dumbledore.jmx.ReadWriteJmxListener;
+import dumbledore.jmx.ReadOnlyJmxListener;
 import dumbledore.metrics.DataType;
 import dumbledore.metrics.MetricType;
+import dumbledore.metrics.SensorListener;
 import dumbledore.metrics.SensorRegistry;
 import org.apache.log4j.Logger;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -19,15 +22,27 @@ public class ExampleServer {
 
     private static final Logger logger = Logger.getLogger(ExampleServer.class);
 
-    private final int port;
+    private final ExampleServerConfig config;
     private final SensorRegistry registry;
     private final AtomicBoolean started;
 
-    public ExampleServer(int port) {
-        this.port = port;
-        this.registry = SensorRegistry.create(ImmutableList.of(new LoggingListener(),
-                                                               new JmxListener()));
+    public ExampleServer(ExampleServerConfig config) {
+        this.config = config;
+        this.registry = createSensorRegistry();
         this.started = new AtomicBoolean(false);
+    }
+
+    private SensorRegistry createSensorRegistry() {
+        List<SensorListener> listeners = Lists.newArrayList();
+        listeners.add(new LoggingListener());
+        if(config.isJmxEnabled()) {
+            if(config.isReadWriteJmxEnabled()) {
+                listeners.add(new ReadWriteJmxListener());
+            } else {
+                listeners.add(new ReadOnlyJmxListener());
+            }
+        }
+        return SensorRegistry.create(listeners);
     }
 
     @Attribute(name = "isStarted",
