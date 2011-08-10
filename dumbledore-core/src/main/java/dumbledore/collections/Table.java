@@ -24,21 +24,15 @@ public interface Table<R, C, V> {
 
     public void clear();
 
-    public V put(R rowKey, C columnKey, V value);
+    public V get(R rowKey, C columnKey);
 
-    public V putAll(Table<? extends R, ? extends C, ? extends V> table);
+    public V put(R rowKey, C columnKey, V value);
 
     public V remove(R rowKey, C columnKey);
 
     public Map<C, V> row(R rowKey);
 
-    public Map<R, V> column(C columnKey);
-
-    public Collection<V> values();
-
-    public Collection<R> rowKeys();
-
-    public Collection<C> columnKeys(R rowKey, C columnKey);
+    public Collection<R> rowKeySet();
 
     public Map<R, Map<C, V>> rowMap();
 }

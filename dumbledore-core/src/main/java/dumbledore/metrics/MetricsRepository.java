@@ -1,7 +1,9 @@
 package dumbledore.metrics;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import dumbledore.collections.Table;
+import dumbledore.collections.Tables;
 import dumbledore.utils.Utils;
 
 import javax.annotation.concurrent.GuardedBy;
@@ -26,9 +28,9 @@ public class MetricsRepository {
     private final Collection<? extends MetricsListener> listeners;
 
     public MetricsRepository(Collection<? extends MetricsListener> listeners) {
-        Preconditions.checkNotNull(listeners);
+        Utils.notNull(listeners);
 
-        metrics = HashBasedTable.create();
+        metrics = Tables.createHashBasedTable();
         this.listeners = listeners;
     }
 

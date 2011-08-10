@@ -1,6 +1,7 @@
 package dumbledore.collections;
 
 import dumbledore.utils.Supplier;
+import dumbledore.utils.Utils;
 
 import java.util.Collection;
 import java.util.Map;
@@ -31,50 +32,68 @@ public class BaseTable<R, C, V> implements Table<R, C, V> {
     }
 
     public boolean isEmpty() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return underlying.isEmpty();
     }
-
     public int size() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        int size = 0;
+        for(Map<C, V> map: underlying.values())
+            size += map.size();
+        return size;
     }
 
     public void clear() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        underlying.clear();
+    }
+
+    public V get(R rowKey, C columnKey) {
+        if(rowKey == null || columnKey == null)
+            return null;
+        Map<C, V> map = underlying.get(rowKey);
+        if(map == null)
+            return null;
+        return map.get(columnKey);
+    }
+
+    private Map<C, V> getOrCreate(R rowKey) {
+        Map<C, V> map = underlying.get(rowKey);
+        if(map == null) {
+            map = factory.get();
+            underlying.put(rowKey, map);
+        }
+        return map;
     }
 
     public V put(R rowKey, C columnKey, V value) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public V putAll(Table<? extends R, ? extends C, ? extends V> table) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        Utils.notNull(rowKey);
+        Utils.notNull(columnKey);
+        Utils.notNull(value);
+        return getOrCreate(rowKey).put(columnKey, value);
     }
 
     public V remove(R rowKey, C columnKey) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        if((rowKey == null) || (columnKey == null))
+            return null;
+        Map<C, V> map = underlying.get(rowKey);
+        if(map == null)
+            return null;
+        V value = map.remove(columnKey);
+        if(map.isEmpty())
+            underlying.remove(rowKey);
+        return value;
     }
 
+    @Override
     public Map<C, V> row(R rowKey) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return underlying.get(rowKey);
     }
 
-    public Map<R, V> column(C columnKey) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    @Override
+    public Collection<R> rowKeySet() {
+        return underlying.keySet();
     }
 
-    public Collection<V> values() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public Collection<R> rowKeys() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public Collection<C> columnKeys(R rowKey, C columnKey) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
+    @Override
     public Map<R, Map<C, V>> rowMap() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return underlying;
     }
 }
