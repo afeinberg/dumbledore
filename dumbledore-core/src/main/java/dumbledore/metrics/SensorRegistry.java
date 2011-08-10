@@ -28,16 +28,15 @@ public class SensorRegistry {
     private final Collection<? extends SensorListener> listeners;
     private final SensorDescriptorFactory factory;
 
+    public SensorRegistry(Collection<? extends SensorListener> listeners) {
+        this(new DefaultSensorDescriptorFactory(), listeners);
+    }
+
     public SensorRegistry(SensorDescriptorFactory factory,
                           Collection<? extends SensorListener> listeners) {
         this.factory = Utils.notNull(factory);
         this.listeners = Utils.notNull(listeners);
         sensors = ColumnarHashMap.create();
-    }
-
-    public static SensorRegistry create(Collection<? extends SensorListener> listeners) {
-        return new SensorRegistry(new DefaultSensorDescriptorFactory(
-          new DefaultAttributeDescriptorFactory()), listeners);
     }
 
     public void register(Object obj) {

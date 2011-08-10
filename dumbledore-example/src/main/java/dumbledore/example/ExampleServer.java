@@ -42,7 +42,7 @@ public class ExampleServer {
                 listeners.add(new ReadOnlyJmxListener());
             }
         }
-        return SensorRegistry.create(listeners);
+        return new SensorRegistry(listeners);
     }
 
     @Attribute(name = "isStarted",

@@ -1,5 +1,6 @@
 package dumbledore.metrics;
 
+import dumbledore.annotations.Sensor;
 import dumbledore.utils.Utils;
 import junit.framework.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -22,7 +23,7 @@ public class SensorRegistryTest {
         listeners = Lists.newArrayList();
         listeners.add(new MockSensorListener());
         listeners.add(new MockSensorListener());
-        registry = SensorRegistry.create(listeners);
+        registry = new SensorRegistry(listeners);
     }
 
     @Test
@@ -42,14 +43,14 @@ public class SensorRegistryTest {
         Example example = new Example(123, 3.14);
         registry.register(example);
         SensorDescriptor sensor = registry.getSensor(Utils.getPackageName(Example.class),
-                                                  Utils.getClassName(Example.class));
+                                                     Utils.getClassName(Example.class));
         Assert.assertEquals(sensor.getSensor(), example);
         Assert.assertTrue(registry.getSensorDomains()
-                                    .contains(Utils.getPackageName(Example.class)));
+                                  .contains(Utils.getPackageName(Example.class)));
         Assert.assertTrue(registry.getSensorTypes(Utils.getPackageName(Example.class))
-                                    .contains(Utils.getClassName(Example.class)));
+                                  .contains(Utils.getClassName(Example.class)));
         Assert.assertEquals(registry.getAllSensors().get(Utils.getPackageName(Example.class))
-                                      .get(Utils.getClassName(Example.class)),
+                                    .get(Utils.getClassName(Example.class)),
                             sensor);
     }
 
