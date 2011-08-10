@@ -46,4 +46,14 @@ public class AttributeDescriptor {
     public Method getValueMethod() {
         return valueMethod;
     }
+
+    @Override
+    public String toString() {
+        return "AttributeDescriptor{" +
+               "name='" + name + '\'' +
+               ", description='" + description + '\'' +
+               ", dataType=" + dataType +
+               ", metricType=" + metricType +
+               '}';
+    }
 }

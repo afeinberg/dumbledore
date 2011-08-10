@@ -17,10 +17,12 @@ public class LoggingListener implements SensorListener {
                     +  domain
                     + ", type = "
                     + type);
+        if(logger.isDebugEnabled())
+            logger.debug(sensor.toString());
     }
 
     public void unregistered(String domain, String type) {
-        logger.info("Unregistered a metric, domain = "
+        logger.info("Unregistered a sensor, domain = "
                     + domain
                     + ", type = "
                    + type);

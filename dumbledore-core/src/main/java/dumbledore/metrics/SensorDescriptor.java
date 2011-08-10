@@ -66,4 +66,14 @@ public class SensorDescriptor {
                                             ite);
         }
     }
+
+    @Override
+    public String toString() {
+        return "SensorDescriptor{" +
+               "sensor=" + sensor +
+               ", name='" + name + '\'' +
+               ", description='" + description + '\'' +
+               ", attributes=" + attributes +
+               '}';
+    }
 }
