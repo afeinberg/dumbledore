@@ -11,12 +11,12 @@ public class MockSensorListener implements SensorListener {
     }
 
     @Override
-    public void added(String domain, String type, SensorWrapper sensor) {
+    public void registered(String domain, String type, SensorWrapper sensor) {
         metricsAdded++;
     }
 
     @Override
-    public void removed(String domain, String type) {
+    public void unregistered(String domain, String type) {
         metricsRemoved++;
     }
 

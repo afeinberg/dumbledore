@@ -1,6 +1,6 @@
 package dumbledore.servlet;
 
-import dumbledore.metrics.SensorRepository;
+import dumbledore.metrics.SensorRegistry;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -19,14 +19,14 @@ public class DumbledoreServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(DumbledoreServlet.class);
 
     /**
-     * The repository object, protected so that the extending classes
+     * The registry object, protected so that the extending classes
      * could set this field via other methods, such as through a custom
      * ServletContext.
      */
-    protected SensorRepository repository;
+    protected SensorRegistry registry;
 
-    public DumbledoreServlet(SensorRepository repository) {
-        this.repository = repository;
+    public DumbledoreServlet(SensorRegistry registry) {
+        this.registry = registry;
     }
 
     @Override

@@ -6,7 +6,7 @@ import dumbledore.annotations.Sensor;
 import dumbledore.jmx.JmxListener;
 import dumbledore.metrics.DataType;
 import dumbledore.metrics.MetricType;
-import dumbledore.metrics.SensorRepository;
+import dumbledore.metrics.SensorRegistry;
 import org.apache.log4j.Logger;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -20,12 +20,12 @@ public class ExampleServer {
     private static final Logger logger = Logger.getLogger(ExampleServer.class);
 
     private final int port;
-    private final SensorRepository repository;
+    private final SensorRegistry registry;
     private final AtomicBoolean started;
 
     public ExampleServer(int port) {
         this.port = port;
-        this.repository = new SensorRepository(ImmutableList.of(new LoggingListener(),
+        this.registry = new SensorRegistry(ImmutableList.of(new LoggingListener(),
                                                                  new JmxListener()));
         this.started = new AtomicBoolean(false);
     }
@@ -42,7 +42,7 @@ public class ExampleServer {
         boolean isntStarted = started.compareAndSet(false, true);
         if(!isntStarted)
             throw new IllegalStateException("Server is already started!");
-        repository.addMetric(this);
+        registry.register(this);
         // TODO: add a sample http servlet
     }
 
@@ -52,6 +52,6 @@ public class ExampleServer {
             logger.info("The service is already stopped, ignoring duplicate attempt.");
             return;
         }
-        repository.removeMetric(this);
+        registry.unregisterSensor(this);
     }
 }

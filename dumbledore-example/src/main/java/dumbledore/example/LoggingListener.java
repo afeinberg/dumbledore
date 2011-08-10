@@ -12,14 +12,14 @@ public class LoggingListener implements SensorListener {
 
     private static final Logger logger = Logger.getLogger(LoggingListener.class);
 
-    public void added(String domain, String type, SensorWrapper sensor) {
+    public void registered(String domain, String type, SensorWrapper sensor) {
         logger.info("Registered a sensor, domain = "
                     +  domain
                     + ", type = "
                     + type);
     }
 
-    public void removed(String domain, String type) {
+    public void unregistered(String domain, String type) {
         logger.info("Unregistered a metric, domain = "
                     + domain
                     + ", type = "
