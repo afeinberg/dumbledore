@@ -42,7 +42,7 @@ public class SensorRegistry {
         sensors = ColumnarHashMap.create();
     }
 
-    public void register(Object obj) {
+    public void registerSensor(Object obj) {
         Class<?> cls = obj.getClass();
         registerSensor(Utils.getPackageName(cls), Utils.getClassName(cls), obj);
     }
@@ -77,12 +77,13 @@ public class SensorRegistry {
 
     public void unregisterSensor(String domain, String type)  {
         synchronized(this) {
-            if(!sensors.contains(type, domain))
+            if(!sensors.contains(domain, type))
                 throw new IllegalArgumentException("No sensor for domain "
                                                    + domain
                                                    + ", type "
-                                                   + "exists!");
-            sensors.remove(type, domain);
+                                                   + type
+                                                   + " exists!");
+            sensors.remove(domain, type);
         }
 
         for(SensorListener listener: listeners) {
@@ -91,7 +92,7 @@ public class SensorRegistry {
     }
 
     public synchronized SensorDescriptor getSensor(String domain, String type) {
-        return sensors.get(type, domain);
+        return sensors.get(domain, type);
     }
 
     public synchronized Map<String, SensorDescriptor> getSensors(String domain) {

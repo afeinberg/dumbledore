@@ -12,7 +12,7 @@ public class Utils {
 
     public static String getClassName(Class<?> c) {
         String name = c.getName();
-        return name.substring(0, name.lastIndexOf('.'));
+        return name.substring(name.lastIndexOf('.') + 1, name.length());
     }
 
     public static <T> T notNull(T t) {

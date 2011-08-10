@@ -28,7 +28,7 @@ public class SensorRegistryTest {
 
     @Test
     public void testListeners() {
-        registry.register(new Example(123, 3.14));
+        registry.registerSensor(new Example(123, 3.14));
         Assert.assertEquals(listeners.get(0).getMetricsAdded(), 1);
         Assert.assertEquals(listeners.get(0).getMetricsRemoved(), 0);
 
@@ -41,7 +41,7 @@ public class SensorRegistryTest {
     @Test
     public void testAddAndGet() {
         Example example = new Example(123, 3.14);
-        registry.register(example);
+        registry.registerSensor(example);
         SensorDescriptor sensor = registry.getSensor(Utils.getPackageName(Example.class),
                                                      Utils.getClassName(Example.class));
         Assert.assertEquals(sensor.getSensor(), example);

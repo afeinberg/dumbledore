@@ -33,6 +33,7 @@ public class BaseColumnarMap<R, C, V> implements ColumnarMap<R, C, V> {
     public boolean isEmpty() {
         return underlying.isEmpty();
     }
+
     public int size() {
         int size = 0;
         for(Map<C, V> map: underlying.values())

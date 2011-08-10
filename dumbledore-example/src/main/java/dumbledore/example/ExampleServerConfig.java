@@ -18,24 +18,31 @@ public class ExampleServerConfig {
             return port;
         }
 
-        public void setPort(int port) {
+        public Builder setPort(int port) {
             this.port = port;
+            return this;
         }
 
         public boolean isJmxEnabled() {
             return jmxEnabled;
         }
 
-        public void setJmxEnabled(boolean jmxEnabled) {
+        public Builder setJmxEnabled(boolean jmxEnabled) {
             this.jmxEnabled = jmxEnabled;
+            return this;
         }
 
         public boolean isReadWriteJmxEnabled() {
             return isReadWriteJmxEnabled;
         }
 
-        public void setReadWriteJmxEnabled(boolean readWriteJmxEnabled) {
+        public Builder setReadWriteJmxEnabled(boolean readWriteJmxEnabled) {
             this.isReadWriteJmxEnabled = readWriteJmxEnabled;
+            return this;
+        }
+
+        public ExampleServerConfig build() {
+            return new ExampleServerConfig(this);
         }
     }
 
@@ -43,6 +50,10 @@ public class ExampleServerConfig {
         this.port = builder.getPort();
         this.jmxEnabled = builder.isJmxEnabled();
         this.readWriteJmxEnabled = builder.isReadWriteJmxEnabled();
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
     public int getPort() {
