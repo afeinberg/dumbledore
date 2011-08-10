@@ -4,15 +4,15 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * Inspired by guava's Table collection, but built to avoid
- * an external dependency on guava (which may bring about binary
- * incompatibilities with applications still using google collections/base)
+ * Inspired by guava's Table, but built to avoid an external dependency on
+ * guava (which may bring about binary incompatibilities with applications
+ * still using google-collections
  *
  * @param <R> Type of the table row keys
  * @param <C> Type of the table column key
  * @param <V> Type of the mapped values
  */
-public interface Table<R, C, V> {
+public interface ColumnarMap<R, C, V> {
 
     public boolean contains(R rowKey, C columnKey);
 

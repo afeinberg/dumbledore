@@ -1,6 +1,5 @@
 package dumbledore.collections;
 
-import dumbledore.utils.Supplier;
 import dumbledore.utils.Utils;
 
 import java.util.Collection;
@@ -9,13 +8,13 @@ import java.util.Map;
 /**
  *
  */
-public class BaseTable<R, C, V> implements Table<R, C, V> {
+public class BaseColumnarMap<R, C, V> implements ColumnarMap<R, C, V> {
 
     private final Map<R, Map<C, V>> underlying;
     private final Supplier<? extends Map<C, V>> factory;
 
-    public BaseTable(Map<R, Map<C, V>> underlying,
-                     Supplier<? extends Map<C, V>> factory) {
+    public BaseColumnarMap(Map<R, Map<C, V>> underlying,
+                           Supplier<? extends Map<C, V>> factory) {
         this.underlying = underlying;
         this.factory = factory;
     }

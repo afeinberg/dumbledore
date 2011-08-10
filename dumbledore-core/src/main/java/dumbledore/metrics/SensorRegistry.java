@@ -2,8 +2,8 @@ package dumbledore.metrics;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import dumbledore.collections.Table;
-import dumbledore.collections.Tables;
+import dumbledore.collections.ColumnarHashMap;
+import dumbledore.collections.ColumnarMap;
 import dumbledore.utils.Utils;
 
 import javax.annotation.concurrent.GuardedBy;
@@ -24,7 +24,7 @@ import java.util.Set;
 public class SensorRegistry {
 
     @GuardedBy("this")
-    private final Table<String, String, SensorDescriptor> sensors;
+    private final ColumnarMap<String, String, SensorDescriptor> sensors;
     private final Collection<? extends SensorListener> listeners;
     private final SensorDescriptorFactory factory;
 
@@ -32,7 +32,7 @@ public class SensorRegistry {
                           Collection<? extends SensorListener> listeners) {
         this.factory = Utils.notNull(factory);
         this.listeners = Utils.notNull(listeners);
-        sensors = Tables.createHashBasedTable();
+        sensors = ColumnarHashMap.create();
     }
 
     public static SensorRegistry create(Collection<? extends SensorListener> listeners) {

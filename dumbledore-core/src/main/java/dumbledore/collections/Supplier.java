@@ -1,4 +1,4 @@
-package dumbledore.utils;
+package dumbledore.collections;
 
 /**
  * @author Alex Feinberg
