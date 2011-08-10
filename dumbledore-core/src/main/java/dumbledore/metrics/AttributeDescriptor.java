@@ -5,6 +5,7 @@ import dumbledore.utils.Utils;
 import java.lang.reflect.Method;
 
 /**
+ * A POJO descriptor for the Attribute annotation.
  *
  */
 public class AttributeDescriptor {

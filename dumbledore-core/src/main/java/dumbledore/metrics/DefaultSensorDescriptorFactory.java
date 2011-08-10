@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- *
+ * An annotation based SensorDescriptorFactory
  */
 public class DefaultSensorDescriptorFactory implements SensorDescriptorFactory {
 
@@ -29,20 +29,30 @@ public class DefaultSensorDescriptorFactory implements SensorDescriptorFactory {
                                     attributes);
     }
 
+    /**
+     * Iterates over all methods and extracts ones annotated as attributes
+     * @param sensor The annotated object
+     * @return A map of attribute names to corresponding AttributeDescriptor instances
+     */
     private Map<String, AttributeDescriptor> getAttributes(Object sensor) {
         Class<?> cls = sensor.getClass();
         Method[] methods = cls.getDeclaredMethods();
         Map<String, AttributeDescriptor> attrs = Maps.newHashMapWithExpectedSize(methods.length);
         for(Method method: methods) {
-            AttributeDescriptor attr = extractAttribute(sensor, method);
+            AttributeDescriptor attr = extractAttribute(method);
             if(attr != null)
                 attrs.put(attr.getName(), attr);
         }
         return Collections.unmodifiableMap(attrs);
     }
 
-    public AttributeDescriptor extractAttribute(Object obj, Method method) {
-        if(obj == null || method == null)
+    /**
+     * Process an attributes annotation and create an AttributeDescriptor
+     * @param method The method being examined
+     * @return An AttributeDescriptor based on the annotation, or null if method not annotated
+     */
+    public AttributeDescriptor extractAttribute(Method method) {
+        if(method == null)
             return null;
 
         Attribute annotation = method.getAnnotation(Attribute.class);
