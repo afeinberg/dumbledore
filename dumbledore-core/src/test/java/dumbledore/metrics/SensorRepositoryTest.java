@@ -3,27 +3,26 @@ package dumbledore.metrics;
 import dumbledore.utils.Utils;
 import junit.framework.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.collections.Lists;
 
 import java.util.List;
 
-public class MetricsRepositoryTest {
+public class SensorRepositoryTest {
 
-    private List<MockMetricsListener> listeners;
-    private MetricsRepository repository;
+    private List<MockSensorListener> listeners;
+    private SensorRepository repository;
 
-    public MetricsRepositoryTest() {
+    public SensorRepositoryTest() {
         //
     }
 
     @BeforeMethod
     public void setUp() {
         listeners = Lists.newArrayList();
-        listeners.add(new MockMetricsListener());
-        listeners.add(new MockMetricsListener());
-        repository = new MetricsRepository(listeners);
+        listeners.add(new MockSensorListener());
+        listeners.add(new MockSensorListener());
+        repository = new SensorRepository(listeners);
     }
 
     @Test
@@ -42,16 +41,16 @@ public class MetricsRepositoryTest {
     public void testAddAndGet() {
         Example example = new Example(123, 3.14);
         repository.addMetric(example);
-        MetricWrapper metric = repository.getMetric(Utils.getPackageName(Example.class),
+        SensorWrapper sensor = repository.getMetric(Utils.getPackageName(Example.class),
                                                     Utils.getClassName(Example.class));
-        Assert.assertEquals(metric.getObject(), example);
+        Assert.assertEquals(sensor.getObject(), example);
         Assert.assertTrue(repository.getMetricsDomains()
                                     .contains(Utils.getPackageName(Example.class)));
         Assert.assertTrue(repository.getMetricsTypes(Utils.getPackageName(Example.class))
                                     .contains(Utils.getClassName(Example.class)));
         Assert.assertEquals(repository.getAllMetrics().get(Utils.getPackageName(Example.class))
                                       .get(Utils.getClassName(Example.class)),
-                            metric);
+                            sensor);
     }
 
 }

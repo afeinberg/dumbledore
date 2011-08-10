@@ -1,7 +1,7 @@
 package dumbledore.jmx;
 
 import dumbledore.annotations.Attribute;
-import dumbledore.annotations.Metric;
+import dumbledore.annotations.Sensor;
 import dumbledore.annotations.Operation;
 import dumbledore.annotations.Param;
 import dumbledore.annotations.Setter;
@@ -54,7 +54,7 @@ public class JmxUtils {
     public static ModelMBean createModelMBean(Object o) {
         try {
             ModelMBean mbean = new RequiredModelMBean();
-            Metric annotation = o.getClass().getAnnotation(Metric.class);
+            Sensor annotation = o.getClass().getAnnotation(Sensor.class);
             String description = annotation == null ? "" : annotation.description();
             ModelMBeanInfo info = new ModelMBeanInfoSupport(o.getClass().getName(),
                                                             description,

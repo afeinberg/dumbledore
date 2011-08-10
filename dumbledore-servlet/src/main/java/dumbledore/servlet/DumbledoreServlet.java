@@ -1,6 +1,6 @@
 package dumbledore.servlet;
 
-import dumbledore.metrics.MetricsRepository;
+import dumbledore.metrics.SensorRepository;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -23,9 +23,9 @@ public class DumbledoreServlet extends HttpServlet {
      * could set this field via other methods, such as through a custom
      * ServletContext.
      */
-    protected MetricsRepository repository;
+    protected SensorRepository repository;
 
-    public DumbledoreServlet(MetricsRepository repository) {
+    public DumbledoreServlet(SensorRepository repository) {
         this.repository = repository;
     }
 

@@ -18,16 +18,16 @@ import java.util.Set;
  * Domains are unique, each domain can several unique types.
  * </p>
  * When a metric is added or removed from a repository, each
- * {@link MetricsListener} associated with the repository is invoked.
+ * {@link SensorListener} associated with the repository is invoked.
  */
 @ThreadSafe
-public class MetricsRepository {
+public class SensorRepository {
 
     @GuardedBy("this")
-    private final Table<String, String, MetricWrapper> metrics;
-    private final Collection<? extends MetricsListener> listeners;
+    private final Table<String, String, SensorWrapper> metrics;
+    private final Collection<? extends SensorListener> listeners;
 
-    public MetricsRepository(Collection<? extends MetricsListener> listeners) {
+    public SensorRepository(Collection<? extends SensorListener> listeners) {
         Utils.notNull(listeners);
 
         metrics = Tables.createHashBasedTable();
@@ -45,15 +45,15 @@ public class MetricsRepository {
     }
 
     public void addMetric(String domain, String type, Object obj) {
-        MetricWrapper metric = MetricWrapper.fromObject(obj);
+        SensorWrapper sensor = SensorWrapper.fromObject(obj);
         synchronized(this) {
             if(metrics.contains(domain, type))
                 removeMetric(domain, type);
-            metrics.put(domain, type, metric);
+            metrics.put(domain, type, sensor);
         }
 
-        for(MetricsListener listener: listeners) {
-            listener.added(domain, type, metric);
+        for(SensorListener listener: listeners) {
+            listener.added(domain, type, sensor);
         }
     }
 
@@ -77,20 +77,20 @@ public class MetricsRepository {
             metrics.remove(type, domain);
         }
 
-        for(MetricsListener listener: listeners) {
+        for(SensorListener listener: listeners) {
             listener.removed(domain, type);
         }
     }
 
-    public synchronized MetricWrapper getMetric(String domain, String type) {
+    public synchronized SensorWrapper getMetric(String domain, String type) {
         return metrics.get(type, domain);
     }
 
-    public synchronized Map<String, MetricWrapper> getMetrics(String domain) {
+    public synchronized Map<String, SensorWrapper> getMetrics(String domain) {
         return ImmutableMap.copyOf(metrics.row(domain));
     }
 
-    public synchronized Map<String, Map<String, MetricWrapper>> getAllMetrics() {
+    public synchronized Map<String, Map<String, SensorWrapper>> getAllMetrics() {
         return ImmutableMap.copyOf(metrics.rowMap());
     }
 

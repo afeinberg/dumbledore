@@ -1,18 +1,18 @@
 package dumbledore.jmx;
 
-import dumbledore.metrics.MetricWrapper;
-import dumbledore.metrics.MetricsListener;
+import dumbledore.metrics.SensorWrapper;
+import dumbledore.metrics.SensorListener;
 
 import javax.management.ObjectName;
 
 /**
  *
  */
-public class JmxListener implements MetricsListener {
+public class JmxListener implements SensorListener {
 
-    public void added(String domain, String type, MetricWrapper metric) {
+    public void added(String domain, String type, SensorWrapper sensor) {
         ObjectName name = JmxUtils.createObjectName(domain, type);
-        JmxUtils.registerMbean(metric.getObject(), name);
+        JmxUtils.registerMbean(sensor.getObject(), name);
     }
 
 

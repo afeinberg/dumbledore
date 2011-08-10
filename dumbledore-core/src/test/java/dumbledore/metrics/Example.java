@@ -1,12 +1,12 @@
 package dumbledore.metrics;
 
 import dumbledore.annotations.Attribute;
-import dumbledore.annotations.Metric;
+import dumbledore.annotations.Sensor;
 
 /**
 *
 */
-@Metric(description = "Example class")
+@Sensor(description = "Example class")
 public class Example {
 
     private final long foo;

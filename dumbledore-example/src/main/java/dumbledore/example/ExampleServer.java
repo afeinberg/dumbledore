@@ -2,11 +2,11 @@ package dumbledore.example;
 
 import com.google.common.collect.ImmutableList;
 import dumbledore.annotations.Attribute;
-import dumbledore.annotations.Metric;
+import dumbledore.annotations.Sensor;
 import dumbledore.jmx.JmxListener;
 import dumbledore.metrics.DataType;
 import dumbledore.metrics.MetricType;
-import dumbledore.metrics.MetricsRepository;
+import dumbledore.metrics.SensorRepository;
 import org.apache.log4j.Logger;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -14,18 +14,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  *
  */
-@Metric(description = "An example server")
+@Sensor(description = "An example server")
 public class ExampleServer {
 
     private static final Logger logger = Logger.getLogger(ExampleServer.class);
 
     private final int port;
-    private final MetricsRepository repository;
+    private final SensorRepository repository;
     private final AtomicBoolean started;
 
     public ExampleServer(int port) {
         this.port = port;
-        this.repository = new MetricsRepository(ImmutableList.of(new LoggingListener(),
+        this.repository = new SensorRepository(ImmutableList.of(new LoggingListener(),
                                                                  new JmxListener()));
         this.started = new AtomicBoolean(false);
     }

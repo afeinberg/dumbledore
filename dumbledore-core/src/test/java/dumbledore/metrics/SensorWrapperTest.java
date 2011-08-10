@@ -9,18 +9,18 @@ import java.lang.reflect.Method;
 /**
  *
  */
-public class MetricWrapperTest {
+public class SensorWrapperTest {
 
     private final Example example;
 
-    public MetricWrapperTest() {
+    public SensorWrapperTest() {
         this.example = new Example(123,
                                    3.14);
     }
 
     @Test
     public void testFromObject() throws Exception {
-        MetricWrapper wrapper = MetricWrapper.fromObject(example);
+        SensorWrapper wrapper = SensorWrapper.fromObject(example);
         Method fooMeth = Example.class.getDeclaredMethod("getFoo");
         AttributeWrapper fooAttr = AttributeWrapper.fromMethod(example, fooMeth);
 

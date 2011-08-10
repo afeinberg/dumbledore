@@ -14,20 +14,20 @@ public class AttributeWrapper {
     private final String description;
     private final DataType dataType;
     private final MetricType metricType;
-    private final Object metricObject;
+    private final Object sensorObject;
     private final Method method;
 
     public AttributeWrapper(String name,
                             String description,
                             DataType dataType,
                             MetricType metricType,
-                            Object metricObject,
+                            Object sensorObject,
                             Method method) {
         this.name = name;
         this.description = description;
         this.dataType = dataType;
         this.metricType = metricType;
-        this.metricObject = metricObject;
+        this.sensorObject = sensorObject;
         this.method = method;
     }
 
@@ -65,8 +65,8 @@ public class AttributeWrapper {
         return metricType;
     }
 
-    public Object getMetricObject() {
-        return metricObject;
+    public Object getSensorObject() {
+        return sensorObject;
     }
 
     public Method getMethod() {
@@ -75,7 +75,7 @@ public class AttributeWrapper {
 
     public Object getValue() {
         try {
-            return getMethod().invoke(getMetricObject());
+            return getMethod().invoke(getSensorObject());
         } catch(Exception e) {
             throw new RuntimeException("Error getting the attribute's value ", e);
         }
@@ -92,7 +92,7 @@ public class AttributeWrapper {
         if (description != null ? !description.equals(that.description) : that.description != null)
             return false;
         if (method != null ? !method.equals(that.method) : that.method != null) return false;
-        if (metricObject != null ? !metricObject.equals(that.metricObject) : that.metricObject != null)
+        if (sensorObject != null ? !sensorObject.equals(that.sensorObject) : that.sensorObject != null)
             return false;
         if (metricType != that.metricType) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -106,7 +106,7 @@ public class AttributeWrapper {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (dataType != null ? dataType.hashCode() : 0);
         result = 31 * result + (metricType != null ? metricType.hashCode() : 0);
-        result = 31 * result + (metricObject != null ? metricObject.hashCode() : 0);
+        result = 31 * result + (sensorObject != null ? sensorObject.hashCode() : 0);
         result = 31 * result + (method != null ? method.hashCode() : 0);
         return result;
     }

@@ -1,17 +1,17 @@
 package dumbledore.metrics;
 
-public class MockMetricsListener implements MetricsListener {
+public class MockSensorListener implements SensorListener {
 
     private volatile int metricsAdded;
     private volatile int metricsRemoved;
 
-    public MockMetricsListener() {
+    public MockSensorListener() {
         metricsAdded = 0;
         metricsRemoved = 0;
     }
 
     @Override
-    public void added(String domain, String type, MetricWrapper metric) {
+    public void added(String domain, String type, SensorWrapper sensor) {
         metricsAdded++;
     }
 

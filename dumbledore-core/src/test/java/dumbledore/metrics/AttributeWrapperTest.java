@@ -26,7 +26,7 @@ public class AttributeWrapperTest {
         Assert.assertEquals(attr.getDataType(), DataType.LONG);
         Assert.assertEquals(attr.getMetricType(), MetricType.GAUGE);
         Assert.assertEquals(attr.getMethod(), meth);
-        Assert.assertEquals(attr.getMetricObject(), example);
+        Assert.assertEquals(attr.getSensorObject(), example);
     }
 
     @Test
