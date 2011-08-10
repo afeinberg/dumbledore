@@ -24,14 +24,20 @@ import java.util.Set;
 public class SensorRegistry {
 
     @GuardedBy("this")
-    private final Table<String, String, SensorWrapper> sensors;
+    private final Table<String, String, SensorDescriptor> sensors;
     private final Collection<? extends SensorListener> listeners;
+    private final SensorDescriptorFactory factory;
 
-    public SensorRegistry(Collection<? extends SensorListener> listeners) {
-        Utils.notNull(listeners);
-
+    public SensorRegistry(SensorDescriptorFactory factory,
+                          Collection<? extends SensorListener> listeners) {
+        this.factory = Utils.notNull(factory);
+        this.listeners = Utils.notNull(listeners);
         sensors = Tables.createHashBasedTable();
-        this.listeners = listeners;
+    }
+
+    public static SensorRegistry create(Collection<? extends SensorListener> listeners) {
+        return new SensorRegistry(new DefaultSensorDescriptorFactory(
+          new DefaultAttributeDescriptorFactory()), listeners);
     }
 
     public void register(Object obj) {
@@ -45,7 +51,7 @@ public class SensorRegistry {
     }
 
     public void registerSensor(String domain, String type, Object obj) {
-        SensorWrapper sensor = SensorWrapper.fromObject(obj);
+        SensorDescriptor sensor = factory.get(obj);
         synchronized(this) {
             if(sensors.contains(domain, type))
                 unregisterSensor(domain, type);
@@ -82,15 +88,15 @@ public class SensorRegistry {
         }
     }
 
-    public synchronized SensorWrapper getSensor(String domain, String type) {
+    public synchronized SensorDescriptor getSensor(String domain, String type) {
         return sensors.get(type, domain);
     }
 
-    public synchronized Map<String, SensorWrapper> getSensors(String domain) {
+    public synchronized Map<String, SensorDescriptor> getSensors(String domain) {
         return ImmutableMap.copyOf(sensors.row(domain));
     }
 
-    public synchronized Map<String, Map<String, SensorWrapper>> getAllSensors() {
+    public synchronized Map<String, Map<String, SensorDescriptor>> getAllSensors() {
         return ImmutableMap.copyOf(sensors.rowMap());
     }
 

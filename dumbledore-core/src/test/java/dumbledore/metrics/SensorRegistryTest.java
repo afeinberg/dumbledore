@@ -22,7 +22,7 @@ public class SensorRegistryTest {
         listeners = Lists.newArrayList();
         listeners.add(new MockSensorListener());
         listeners.add(new MockSensorListener());
-        registry = new SensorRegistry(listeners);
+        registry = SensorRegistry.create(listeners);
     }
 
     @Test
@@ -41,9 +41,9 @@ public class SensorRegistryTest {
     public void testAddAndGet() {
         Example example = new Example(123, 3.14);
         registry.register(example);
-        SensorWrapper sensor = registry.getSensor(Utils.getPackageName(Example.class),
+        SensorDescriptor sensor = registry.getSensor(Utils.getPackageName(Example.class),
                                                   Utils.getClassName(Example.class));
-        Assert.assertEquals(sensor.getObject(), example);
+        Assert.assertEquals(sensor.getSensor(), example);
         Assert.assertTrue(registry.getSensorDomains()
                                     .contains(Utils.getPackageName(Example.class)));
         Assert.assertTrue(registry.getSensorTypes(Utils.getPackageName(Example.class))

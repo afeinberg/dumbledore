@@ -1,7 +1,7 @@
 package dumbledore.example;
 
 
-import dumbledore.metrics.SensorWrapper;
+import dumbledore.metrics.SensorDescriptor;
 import dumbledore.metrics.SensorListener;
 import org.apache.log4j.Logger;
 
@@ -12,7 +12,7 @@ public class LoggingListener implements SensorListener {
 
     private static final Logger logger = Logger.getLogger(LoggingListener.class);
 
-    public void registered(String domain, String type, SensorWrapper sensor) {
+    public void registered(String domain, String type, SensorDescriptor sensor) {
         logger.info("Registered a sensor, domain = "
                     +  domain
                     + ", type = "

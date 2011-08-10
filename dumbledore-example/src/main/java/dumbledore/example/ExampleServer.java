@@ -25,8 +25,8 @@ public class ExampleServer {
 
     public ExampleServer(int port) {
         this.port = port;
-        this.registry = new SensorRegistry(ImmutableList.of(new LoggingListener(),
-                                                                 new JmxListener()));
+        this.registry = SensorRegistry.create(ImmutableList.of(new LoggingListener(),
+                                                               new JmxListener()));
         this.started = new AtomicBoolean(false);
     }
 

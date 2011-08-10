@@ -14,12 +14,10 @@ public interface SensorListener {
      * @param type Sensor's type, e.g., "aggregate-statistics"
      * @param sensor A {@link SensorWrapper} instance wrapping the sensor object
      */
-    public void registered(String domain, String type, SensorWrapper sensor);
+    public void registered(String domain, String type, SensorDescriptor sensor);
 
     /**
      * Executed after a metric is removed
-     *
-     * @see #registered(String, String, SensorWrapper)
      */
     public void unregistered(String domain, String type);
 }

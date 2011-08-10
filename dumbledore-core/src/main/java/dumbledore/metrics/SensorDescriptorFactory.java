@@ -3,5 +3,7 @@ package dumbledore.metrics;
 /**
  *
  */
-public class SensorDescriptorFactory {
+public interface SensorDescriptorFactory {
+
+    public SensorDescriptor get(Object sensor);
 }
