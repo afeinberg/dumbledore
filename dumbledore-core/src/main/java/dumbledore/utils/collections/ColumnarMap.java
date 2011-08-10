@@ -1,4 +1,4 @@
-package dumbledore.collections;
+package dumbledore.utils.collections;
 
 import java.util.Collection;
 import java.util.Map;

@@ -1,5 +1,7 @@
 package dumbledore.metrics;
 
+import dumbledore.metrics.registry.SensorListener;
+
 public class MockSensorListener implements SensorListener {
 
     private volatile int metricsAdded;

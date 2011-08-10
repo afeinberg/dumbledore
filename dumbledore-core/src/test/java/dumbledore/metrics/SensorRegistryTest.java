@@ -1,6 +1,6 @@
 package dumbledore.metrics;
 
-import dumbledore.annotations.Sensor;
+import dumbledore.metrics.registry.SensorRegistry;
 import dumbledore.utils.Utils;
 import junit.framework.Assert;
 import org.testng.annotations.BeforeMethod;

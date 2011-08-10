@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import dumbledore.DumbledoreException;
 import dumbledore.metrics.AttributeDescriptor;
 import dumbledore.metrics.SensorDescriptor;
-import dumbledore.metrics.SensorListener;
+import dumbledore.metrics.registry.SensorListener;
 
 import javax.management.Descriptor;
 import javax.management.InstanceNotFoundException;

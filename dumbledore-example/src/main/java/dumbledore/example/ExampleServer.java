@@ -7,8 +7,8 @@ import dumbledore.jmx.ReadWriteJmxListener;
 import dumbledore.jmx.ReadOnlyJmxListener;
 import dumbledore.metrics.DataType;
 import dumbledore.metrics.MetricType;
-import dumbledore.metrics.SensorListener;
-import dumbledore.metrics.SensorRegistry;
+import dumbledore.metrics.registry.SensorListener;
+import dumbledore.metrics.registry.SensorRegistry;
 import org.apache.log4j.Logger;
 
 import java.util.List;

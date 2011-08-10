@@ -1,6 +1,6 @@
 package dumbledore.servlet;
 
-import dumbledore.metrics.SensorRegistry;
+import dumbledore.metrics.registry.SensorRegistry;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;

@@ -1,4 +1,4 @@
-package dumbledore.collections;
+package dumbledore.utils.collections;
 
 import dumbledore.utils.Utils;
 

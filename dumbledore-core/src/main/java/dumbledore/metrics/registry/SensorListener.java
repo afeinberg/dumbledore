@@ -1,4 +1,6 @@
-package dumbledore.metrics;
+package dumbledore.metrics.registry;
+
+import dumbledore.metrics.SensorDescriptor;
 
 /**
  * Allows additional metrics systems, e.g., JMX to run their own

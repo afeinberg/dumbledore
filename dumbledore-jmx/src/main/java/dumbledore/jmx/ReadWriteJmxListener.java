@@ -1,7 +1,7 @@
 package dumbledore.jmx;
 
 import dumbledore.metrics.SensorDescriptor;
-import dumbledore.metrics.SensorListener;
+import dumbledore.metrics.registry.SensorListener;
 
 import javax.management.ObjectName;
 

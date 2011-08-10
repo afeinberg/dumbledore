@@ -1,9 +1,12 @@
-package dumbledore.metrics;
+package dumbledore.metrics.registry;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import dumbledore.collections.ColumnarHashMap;
-import dumbledore.collections.ColumnarMap;
+import dumbledore.utils.collections.ColumnarHashMap;
+import dumbledore.utils.collections.ColumnarMap;
+import dumbledore.metrics.DefaultSensorDescriptorFactory;
+import dumbledore.metrics.SensorDescriptor;
+import dumbledore.metrics.SensorDescriptorFactory;
 import dumbledore.utils.Utils;
 
 import javax.annotation.concurrent.GuardedBy;
