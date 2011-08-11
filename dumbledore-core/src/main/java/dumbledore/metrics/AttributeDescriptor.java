@@ -16,6 +16,14 @@ public class AttributeDescriptor {
     private final MetricType metricType;
     private final Method valueMethod;
 
+    /**
+     * Create an attribute descriptor
+     * @param name Name of the attribute
+     * @param description Description of the Attribute, meant for humans
+     * @param dataType Data type the Attribute returns
+     * @param metricType Kind of metric that the attribute keeps
+     * @param valueMethod Method to be invoked to get the value of the attribute
+     */
     public AttributeDescriptor(String name,
                                String description,
                                DataType dataType,
