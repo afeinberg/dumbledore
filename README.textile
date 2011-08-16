@@ -6,8 +6,7 @@ h3. Sensors and attributes
 
 A basic entity in Dumbledore is a @Sensor@. A sensor corresponds, roughly speaking, to a Java class. Sensors contain attributes. Attributes are shared by all instance of a sensor. Each instance of a sensor has a unique object (a Java object) associated with it.
 
-An @Attribute@ is a read-only parameter and maps onto a method of a class: it has a data type (e.g., a string, a long, a duration, size in bytes) and a metric type (is it a gauge, or is it a counter, etc...).
-The attribute is associated with a specific method of a class. The idea of metric types is borrowed from RRDTool. The default metric type is @GAUGE@, meaning it will be graphed as in on an RRD tool graph.
+An @Attribute@ is a read-only parameter and maps onto a method of a class: it has a data type (e.g., a string, a long, a duration, size in bytes) and a metric type (is it a gauge, or is it a counter, etc...). The attribute is associated with a specific method of a class. The idea of metric types is borrowed from RRDTool. The default metric type is @GAUGE@, meaning it will be graphed as in on an RRD tool graph.
 
 One gets the value of an attribute on an _instance of a sensor_, by invoking the attribute's method on the object held by the instance.
 
@@ -38,4 +37,153 @@ public interface SensorListener {
 
 </code>
 </pre>
+
+h2. Annotations and descriptors
+
+In order for a Java class to be useable as a sensor, it must be annotated with @Sensor@ annotation. To expose a method in a sensor class as an attribute, it must be annotated with the @Attribute@ annotation, providing the needed metadata. Here is an example:
+
+<pre>
+<code>
+@Sensor(description = "Example class")
+public class Example {
+
+    private final long foo;
+    private final double bar;
+    private volatile int baz;
+
+    public Example(long foo, double bar) {
+        this.foo = foo;
+        this.bar = bar;
+    }
+
+    @Attribute(name = "foo",
+               description = "Foo",
+               dataType = DataType.LONG)
+    public long getFoo() {
+        return foo;
+    }
+
+    @Attribute(name = "bar",
+               description = "Bar",
+               dataType = DataType.DOUBLE)
+    public double getBar() {
+        return bar;
+    }
+
+    @Attribute(name = "baz",
+               description = "Baz",
+               dataType = DataType.INTEGER)
+    public int getBaz() {
+        return baz;
+    }
+
+    public void setBaz(int baz) {
+        this.baz = baz;
+    }
+}
+</code>
+</pre>
+
+h3. Descriptors
+
+Extensions to Dumbledore don't have to handle the annotations themselves. Instead, there are two classes: @AttributeDescriptor@ and @SensorDescripto@ designed to simplify dealing with Sensors. In theory, this also allows for sensors to be processed using information other than annotations. 
+
+h4. SensorDescriptor
+
+SensorDescriptor exposes these methods:
+
+<pre>
+<code>
+public Object getSensor();
+
+public String getName();
+
+public String getDescription();
+
+public AttributeDescriptor getAttribute(String attrName);
+
+public Collection<AttributeDescriptor> getAttributes();
+
+public Collection<String> getAttributeNames();
+
+public Object getAttributeValue(String attrName);
+</code>
+</pre>
+
+h4. Attribute Descriptor
+
+AttributeDescriptor exposes these methods:
+
+<pre>
+<code>
+public String getName();
+
+public String getDescription();
+
+public DataType getDataType();
+
+public MetricType getMetricType();
+
+public Method getValueMethod();
+</code>
+</pre>
+
+h3. Tying it together
+
+h4. Registering a sensor
+
+A plain Java object is added to the sensorRegistry using one of its add methods: the type and domain can be specified explicitly, or they can be inferred from the Java object: the package name being the domain name, the class name being the type, e.g., @voldemort.store.engine.BdbStorageEngine@ translating into domain @voldemort.store.engine@ and type @BdbStorageEngine@
+
+Upon registration, the sensor objects are processed and the descriptor objects are created.
+
+h4. Creating descriptors
+
+SensorRegistry can be created with a custom @SensorDescriptorFactory@ passed in. A @SensorDescriptorFactory@ takes a plain Java object and creates a @SensorDescriptor@ object (with attributes properly instantiated). The interface is:
+
+<pre>
+<code>
+public interface SensorDescriptorFactory {
+    
+    public SensorDescriptor get(Object sensor);
+}
+</code>
+</pre>
+
+
+By default, SensorRegistry uses @DefaultSensorDescriptorFactory@, which processes the above described annotations into sensor and attribute descriptors.
+
+h4. Finding descriptors
+
+Here is example from a ervlet that accesses a sensor and then spits out both metadata and sensor value information in JSON:
+
+<pre>
+<code>
+ protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+        String domain = request.getParameter("domain");
+        String type = request.getParameter("type");
+
+        SensorDescriptor sensor = registry.getSensor(domain, type);
+        if(sensor == null) {
+            logger.warn("No sensor found for domain = "
+                        + domain
+                        + ", type = "
+                        + type);
+            response.sendError(HttpServletResponse.SC_NO_CONTENT);
+            return;
+        }
+        StringBuilder sb = new StringBuilder();
+        JsonUtils.sensorToJson(sensor, sb);
+        try {
+            response.setContentType("text/plain");
+            OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream());
+            writer.write(sb.toString());
+            writer.flush();
+        } catch(Exception e) {
+            throw new DumbledoreException(e);
+        }
+    }
+</code>
+</pre>
+
 
